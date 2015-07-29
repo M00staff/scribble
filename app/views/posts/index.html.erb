@@ -1,0 +1,11 @@
+<h1>Index Dizzle<h1>
+
+<ul>
+  <% @posts.each do |post| %>
+  <li>
+    <a href="/posts/<%= post.id %>">
+      <%= post %>
+    </a>
+  </li>
+  <% end %>
+</ul>
