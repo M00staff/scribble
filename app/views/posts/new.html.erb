@@ -1,8 +1,11 @@
 <h2> New Post </h2>
-<form action="/posts" method="post">
-  <input type="hidden" name="authenticity_token" value="<%= form_authenticy_token %>">
 
-  <label for="post[post]">Post:</label>
-  <input name="post[post]"
+<%=form_for @post do |f| %>
+  <%= f.label :author %>
+  <%= f.text_field :author %>
 
-<!-- fix above, shits fucked, yo! -->
+  <%= f.label :post %>
+  <%= f.text_field :post %>
+
+<%= f.submit %>
+<% end %>
