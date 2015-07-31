@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  skip_before_action :authenticate
 
   def sign_up
   end
@@ -6,7 +7,7 @@ class UsersController < ApplicationController
   def sign_up!
     user = User.new(
       username: params[:username],
-      password_digest: params[:password]
+      password_digest: BCrypt::Password.create(params[:password])
     )
     if params[:password_confirmation] != params[:password]
       message = "Your passwords don't match!"
@@ -15,7 +16,7 @@ class UsersController < ApplicationController
     else
       message = "Your account couldn't be created. Did you enter a unique username and password?"
     end
-    puts message
+    flash[:notice] = message
     redirect_to action: :sign_up
   end
 
@@ -26,18 +27,23 @@ class UsersController < ApplicationController
     @user = User.find_by(username: params[:username])
     if !@user
       message = "This user doesn't exist!"
-    elsif @user.password_digest != params[:password]
+    elsif !BCrypt::Password.new(@user.password_digest).is_password?(params[:password])
       message = "Your password's wrong!"
     else
-      message = "You're signed in, #{@user.username}!"
+      message = "You're signed in, #{@user.username}! "
+      cookies[:username] = {
+        value: @user.username,
+        expires: 100.years.from_now
+      }
+      session[:user] = @user
     end
-    puts message
+    flash[:notice] = message
     redirect_to action: :sign_in
   end
 
   def sign_out
-    puts "You're signed out!"
-    redirect_to root_url
+    reset_session
+    redirect_to sign_in_path
   end
 
 end
