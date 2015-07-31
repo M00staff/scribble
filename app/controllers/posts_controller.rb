@@ -16,13 +16,13 @@ class PostsController < ApplicationController
   end
 
   def show
-    @posts = Post.find(params[:id])
-    @comment = Comment.new
+    @post = Post.find(params[:id])
   end
 
 def destroy
   @post = Post.find(params[:id])
   @post.destroy
+
   redirect_to posts_path
 end
 

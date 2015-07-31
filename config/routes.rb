@@ -58,8 +58,9 @@ Rails.application.routes.draw do
   #   end
 
   root to: 'posts#index'
+
   resources :posts do
-  resources :comments
+    resources :comments
 end
 
 end

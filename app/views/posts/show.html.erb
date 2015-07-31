@@ -1,7 +1,17 @@
-<p> <%= @posts.post %> </p>
+<p> <%= @post.post %> </p>
 
-<%= link_to "Comment", new_post_comment_path(@posts.id) %>
 
-<%= form_for(@posts, method: :delete) do |f| %>
+<% @post.comments.each do |comment| %>
+<ul>
+  <%= comment.author %>
+  <%= comment.comment %>
+
+</ul>
+<% end %>
+
+
+<%= link_to "Comment", new_post_comment_path(@post.id) %>
+
+<%= form_for(@post, method: :delete) do |f| %>
   <%= f.submit "Delete Post", class: "delete" %>
 <% end  %>
