@@ -1,11 +1,11 @@
 <h1>Index<h1>
 <%= link_to "New Post", new_post_path(@post) %>
-<%= link_to "Delete Post", new_post_path(@post) %>
 
 <ul>
+
   <% @posts.each do |post| %>
   <li>
-    <%= link_to "#{post.post} - #{post.author}", post_path(post) %>
+    <%= link_to "#{post.author} - #{post.post}", post_path(post) %>
 
   </li>
   <% end %>
